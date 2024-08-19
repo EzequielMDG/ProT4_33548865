@@ -9,7 +9,7 @@ router.delete('/libro', libro.delete);
 router.put('/libro', libro.update);
 
 // Ruta para obtener un libro por id
-router.get('/libros/:id', libro.getOne);
+router.post('/libros', libro.getOne);
 
 // Ruta para eliminar un libro por ISBN
 router.delete('/libros', libro.deleteByISBN);

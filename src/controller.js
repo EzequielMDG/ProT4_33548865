@@ -28,25 +28,28 @@ class LibroController {
     // Método para obtener un libro por id
 
     async getOne(req, res) {
-        const id = req.params;
+    const { id } = req.body; // Extrae el id del cuerpo de la solicitud
+
         if (!id) {
-            return res.status(400).json({ 
+            return res.status(400).json({
                 message: 'Falta el id del libro a consultar',
             });
         }
 
         try {
-            const [result] = await pool.query('SELECT * FROM Libros WHERE id = ?', [id]);
-            if (result.length === 0) {
-                return res.status(404).json({ 
+            const [results] = await pool.query('SELECT * FROM Libros WHERE id = ?', [id]);
+
+            if (results.length === 0) {
+                return res.status(404).json({
                     message: 'Libro no encontrado',
                 });
             }
-            res.json({ 
-                data: result[0],
+
+            res.json({
+                data: results[0],
             });
         } catch (error) {
-            res.status(500).json({ 
+            res.status(500).json({
                 message: 'Error al obtener el libro',
                 error: error.message,
             });
